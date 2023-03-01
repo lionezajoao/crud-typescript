@@ -4,7 +4,7 @@ dotenv.config({ path: "./.env" })
 
 
 
-export class Database {
+class Database {
     private uri: string;
     private options: MongoClientOptions;
 
@@ -26,5 +26,17 @@ export class Database {
         }
     }
 
-    public async findAll(collectio: string, query: Record<string, any>): Promise <> {}
+    public async findAll(collection: string, query: Record<string, any>): Promise <any[]> {
+        return this.db.getCollection(collection).find(query);
+    }
+
+    public async disconnect(): Promise<void> {
+        this.db.close();
+    }
+
+    public async isConnected(): Promise<boolean> {
+        return this.db.isConnected();
+    }
 }
+
+export default Database;
